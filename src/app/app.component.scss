@@ -1,0 +1,81 @@
+:host {
+	display: block;
+
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.player {
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-image: radial-gradient(circle closest-side, rgba(255,255,255,0.05), transparent);
+  background-color: #660011;
+
+  > * {
+  	width: 100%;
+  }
+}
+
+.music-info {
+	font-family: 'Kaushan Script', cursive;
+	color: white;
+  text-align: center;
+  margin-top: 1em;
+  font-size: 1.5em;
+
+  .title {
+  	font-size: 1.15em;
+  }
+}
+
+.artist {
+	margin-top: 0.2em;
+}
+
+.header, .footer {
+	height: 50px;
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+
+	padding: 0 2em; 
+
+	.expand {
+		flex: 1;
+	}
+}
+
+.channel {
+	> * {
+		vertical-align: middle;
+		color: white;
+	}
+
+	select {
+		-moz-appearance: none;
+	  -webkit-appearance: none;
+	  background: none;
+	  border: none;
+	  font-size: 0.95em;
+	  text-align-last: end;
+	  outline: none;
+	  text-transform: uppercase;
+	  margin-right: 0.2em;
+	}
+}
+
+.album {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
