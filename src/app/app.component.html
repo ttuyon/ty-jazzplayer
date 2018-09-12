@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="album">
-    <app-lp #lp [albumCover]="currentTrack && currentTrack.albumArtUrl ? currentTrack.albumArtUrl : '/assets/images/albumart-placeholder.jpg'" (click)="lpClicked()"></app-lp>
+    <app-lp #lp [albumCover]="currentTrack && currentTrack.albumArtUrl ? currentTrack.albumArtUrl : 'assets/images/albumart-placeholder.jpg'" (click)="lpClicked()"></app-lp>
     <div class="music-info">
       <audio #audio autoplay="true" (ended)="audioEnded()" (play)="audioStarted()" (pause)="audioPaused()" src="{{currentTrack ? currentTrack.musicUrl : ''}}"></audio>
       <div class="title" [innerHtml]="currentTrack? currentTrack.title : '&nbsp;'"></div>
