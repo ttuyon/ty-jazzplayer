@@ -41,12 +41,12 @@
 }
 
 .header, .footer {
-	height: 50px;
+	height: 3.75em;
 	flex-shrink: 0;
 	display: flex;
 	align-items: center;
 
-	padding: 0 2em; 
+	padding: 0 1em; 
 
 	.expand {
 		flex: 1;
@@ -64,11 +64,14 @@
 	  -webkit-appearance: none;
 	  background: none;
 	  border: none;
-	  font-size: 0.95em;
+	  font-size: 1em;
 	  text-align-last: end;
 	  outline: none;
 	  text-transform: uppercase;
 	  margin-right: 0.2em;
+
+		font-family: 'Dosis', sans-serif;
+		letter-spacing: 1px;
 	}
 }
 
@@ -78,4 +81,28 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+
+.controls {
+	.control {
+		display: inline-block;
+		color: white;
+
+		line-height: 0;
+    vertical-align: middle;
+
+    cursor: pointer;
+
+    i {
+    	font-size: 30px;
+    }
+
+    &.active {
+    	text-shadow: 0px 0px 10px white;
+    }
+
+    + .control {
+    	margin-left: 0.8em;
+    }
+	}
 }

@@ -15,6 +15,8 @@ export class AppComponent implements OnInit {
   
   public channelList: Array<Channel> = [];
   public currentTrack: Track;
+
+  public repeatOneTrack: boolean = false;
   
   constructor(
     private channelService: ChannelService
@@ -44,6 +46,8 @@ export class AppComponent implements OnInit {
   audioEnded() {
     this.lpElement.playing = false;
 
+    if (this.repeatOneTrack) return;
+
     this.channelService.getNextTrack()
       .subscribe((track: Track) => {
         this.currentTrack = track;
@@ -55,10 +59,22 @@ export class AppComponent implements OnInit {
   }
 
   lpClicked() {
+    if (!this.currentTrack) return;
+
     if (this.lpElement.playing) {
       this.audioElement.nativeElement.pause();
     } else {
       this.audioElement.nativeElement.play();
+    }
+  }
+
+  toggleAudioLoop() {
+    this.repeatOneTrack = !this.repeatOneTrack;
+
+    if (this.repeatOneTrack) {
+      this.audioElement.nativeElement.setAttribute('loop', '');
+    } else {
+      this.audioElement.nativeElement.removeAttribute('loop');
     }
   }
 

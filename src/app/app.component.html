@@ -1,6 +1,16 @@
 <div class="player">
   <div class="header">
-    <div class="menu"></div>
+    <div class="controls">
+      <div class="control history">
+        <i class="material-icons">history</i>
+      </div>
+      <div class="control volume">
+        <i class="material-icons">volume_up</i>
+      </div>
+      <div class="control repeat" [class.active]="repeatOneTrack" (click)="toggleAudioLoop()">
+        <i class="material-icons">repeat_one</i>
+      </div>
+    </div>
     <div class="expand"></div>
     <div class="channel">
       <select (change)="channelChanged($event.target.value)">
@@ -14,12 +24,8 @@
     <app-lp #lp [albumCover]="currentTrack && currentTrack.albumArtUrl ? currentTrack.albumArtUrl : 'assets/images/albumart-placeholder.jpg'" (click)="lpClicked()"></app-lp>
     <div class="music-info">
       <audio #audio autoplay="true" (ended)="audioEnded()" (play)="audioStarted()" (pause)="audioPaused()" src="{{currentTrack ? currentTrack.musicUrl : ''}}"></audio>
-      <div class="title" [innerHtml]="currentTrack? currentTrack.title : '&nbsp;'"></div>
-      <div class="artist" [innerHtml]="currentTrack? ('- ' + currentTrack.artist) : '&nbsp;'"></div>
+      <div class="title">{{ currentTrack ? currentTrack.title : '' }}</div>
+      <div class="artist">{{ currentTrack ? ('- ' + currentTrack.artist) : '' }}</div>
     </div>
-  </div>
-  <div class="footer">
-    <div class="expnad"></div>
-    <div class="volume-control"></div>
   </div>
 </div>
