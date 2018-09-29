@@ -4,11 +4,12 @@
       <div class="control history">
         <i class="material-icons">history</i>
       </div>
-      <div class="control volume">
+      <div class="control volume" (click)="volumeSliderVisible = !volumeSliderVisible">
         <i class="material-icons">volume_up</i>
-        <div class="volume-slider">
+        <div class="volume-slider" [class.active]="volumeSliderVisible" (click)="$event.stopPropagation()">
           <app-vertical-slider (changed)="sliderChanged($event)"></app-vertical-slider>
-          <i class="material-icons">volume_down</i>
+          <i class="material-icons small-volume-icon" [class.active]="!muted" (click)="toggleMute()">volume_down</i>
+          <i class="material-icons small-volume-icon mute" [class.active]="muted" (click)="toggleMute()">volume_mute</i>
         </div>
       </div>
       <div class="control repeat" [class.active]="repeatOneTrack" (click)="toggleAudioLoop()">
@@ -25,7 +26,7 @@
     </div>
   </div>
   <div class="album">
-    <app-lp #lp [albumCover]="currentTrack && currentTrack.albumArtUrl ? currentTrack.albumArtUrl : 'assets/images/albumart-placeholder.jpg'" (click)="lpClicked()"></app-lp>
+    <app-lp [albumCover]="currentTrack && currentTrack.albumArtUrl ? currentTrack.albumArtUrl : 'assets/images/albumart-placeholder.jpg'" (click)="lpClicked()"></app-lp>
     <div class="music-info">
       <audio #audio autoplay="true" (ended)="audioEnded()" (play)="audioStarted()" (pause)="audioPaused()" src="{{currentTrack ? currentTrack.musicUrl : ''}}"></audio>
       <div class="title">{{ currentTrack ? currentTrack.title : '' }}</div>

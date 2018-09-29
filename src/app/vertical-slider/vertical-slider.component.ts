@@ -13,7 +13,6 @@ export class VerticalSliderComponent implements OnInit, AfterViewInit {
 	@ViewChild('handle') handleElement: ElementRef;
 
 	@Output() changed = new EventEmitter<number>();
-  @Input() initialTop: number = 0;
 
 	private handleTopOnPanStart: number;
 	private handleTopMax: number;
@@ -31,14 +30,18 @@ export class VerticalSliderComponent implements OnInit, AfterViewInit {
     let barHammer = new Hammer(this.barElement.nativeElement);
     barHammer.on('tap', (event) => this.onTapBar(event));
 
-    this.setHandleTop(this.initialTop, true);
+    this.setHandleTop(0);
   }
 
-  onTapBar(event: HammerInput) {
+  setSliderValue(percent: number) {
+    this.setHandleTop(this.barElement.nativeElement.offsetHeight * (1 - percent));
+  }
+
+  private onTapBar(event: HammerInput) {
     this.setHandleTop(event.center.y - this.barElement.nativeElement.getBoundingClientRect().top - this.handleElement.nativeElement.offsetHeight / 4);
   }
 
-  onHandlePanned(event: HammerInput) {
+  private onHandlePanned(event: HammerInput) {
   	if (event.type == 'panstart') {
   		this.handleTopOnPanStart = this.getHandleTop();
   		this.handleTopMax = this.barElement.nativeElement.offsetHeight;
@@ -52,14 +55,14 @@ export class VerticalSliderComponent implements OnInit, AfterViewInit {
   	this.setHandleTop(newTop);
   }
 
-  getHandleTop(): number {
+  private getHandleTop(): number {
   	const defaultView = this.handleElement.nativeElement.ownerDocument.defaultView;
   	const top = defaultView.getComputedStyle(this.handleElement.nativeElement).top;
 
   	return parseInt(/\d+/.exec(top)[0]);
   }
 
-  setHandleTop(top: number, omitEventEmitting?: boolean) {
+  private setHandleTop(top: number, omitEventEmitting?: boolean) {
   	const barHeight = this.barElement.nativeElement.offsetHeight;
 
   	this.handleElement.nativeElement.style.top = top + 'px';

@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ChannelService, Track, Channel } from './channel.service';
 
 import { LpComponent } from './lp/lp.component';
+import { VerticalSliderComponent } from './vertical-slider/vertical-slider.component';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,16 @@ import { LpComponent } from './lp/lp.component';
 })
 export class AppComponent implements OnInit {
   @ViewChild('audio') audioElement: ElementRef;
-  @ViewChild('lp', {read: LpComponent}) lpElement: LpComponent;
+  @ViewChild(LpComponent) lpElement: LpComponent;
+  @ViewChild(VerticalSliderComponent) verticalSliderComponent: VerticalSliderComponent;
   
   public channelList: Array<Channel> = [];
   public currentTrack: Track;
 
   public repeatOneTrack: boolean = false;
+  public volumeSliderVisible: boolean = false;
+  public muted: boolean = false;
+  public volumeBeforeMute: number;
   
   constructor(
     private channelService: ChannelService
@@ -68,8 +73,20 @@ export class AppComponent implements OnInit {
     }
   }
 
-  sliderChanged(position) {
-    this.audioElement.nativeElement.volume = position;
+  sliderChanged(value) {
+    this.changeVolume(value);
+  }
+
+  toggleMute() {
+    if (!this.muted) {
+      this.volumeBeforeMute = this.audioElement.nativeElement.volume;
+    }
+    this.verticalSliderComponent.setSliderValue(this.muted ? this.volumeBeforeMute : 0);
+  }
+
+  changeVolume(volume) {
+    this.audioElement.nativeElement.volume = volume;
+    this.muted = volume == 0;
   }
 
   toggleAudioLoop() {

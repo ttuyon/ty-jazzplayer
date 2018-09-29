@@ -102,9 +102,38 @@
     }
 
     &.volume {
+      position: relative;
+
       .volume-slider {
         position: absolute;
-        top: calc(100% + 8px);
+        top: 100%;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        // transform: scaleY(0);
+        transform-origin: top;
+
+        pointer-events: none;
+        transition: all 0.2s linear;
+
+        .small-volume-icon.mute {
+          margin-left: -2px;
+          display: inline-block;
+        }
+
+        .small-volume-icon:not(.active) {
+          display: none;
+        }
+
+        &.active {
+          opacity: 1;
+          pointer-events: auto;
+          // transform: scaleY(1);
+        }
+
+        app-vertical-slider {
+          margin: 6px auto;
+        }
       }
     }
 
