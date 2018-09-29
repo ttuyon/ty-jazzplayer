@@ -5,11 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LpComponent } from './lp/lp.component';
+import { VerticalSliderComponent } from './vertical-slider/vertical-slider.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LpComponent
+    LpComponent,
+    VerticalSliderComponent
   ],
   imports: [
     BrowserModule,

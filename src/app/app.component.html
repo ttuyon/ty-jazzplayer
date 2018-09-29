@@ -6,6 +6,10 @@
       </div>
       <div class="control volume">
         <i class="material-icons">volume_up</i>
+        <div class="volume-slider">
+          <app-vertical-slider (changed)="sliderChanged($event)"></app-vertical-slider>
+          <i class="material-icons">volume_down</i>
+        </div>
       </div>
       <div class="control repeat" [class.active]="repeatOneTrack" (click)="toggleAudioLoop()">
         <i class="material-icons">repeat_one</i>

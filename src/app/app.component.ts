@@ -68,6 +68,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+  sliderChanged(position) {
+    this.audioElement.nativeElement.volume = position;
+  }
+
   toggleAudioLoop() {
     this.repeatOneTrack = !this.repeatOneTrack;
 
