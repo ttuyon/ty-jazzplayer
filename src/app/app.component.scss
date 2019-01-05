@@ -32,7 +32,8 @@
   align-items: center;
 
   background-image: radial-gradient(circle closest-side, rgba(255,255,255,0.05), transparent);
-  background-color: #660011;
+  // background-color: #660011;
+  background-color: #4e020e;
   box-shadow: -3px 0 6px 0 rgba(0, 0, 0, 0.4);
 
   > * {
@@ -46,7 +47,7 @@
   left: -300px;
   top: 0;
   bottom: 0;
-  background-color: #660011;
+  background-color: #4e020e;
   z-index: -1;
 }
 
