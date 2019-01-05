@@ -1,0 +1,14 @@
+<div class="tabs">
+	<div class="tab active"><i class="material-icons">history</i></div>
+	<div class="tab"><i class="material-icons">favorite</i></div>
+</div>
+<div class="tracks">
+	<div class="track" *ngFor="let history of histories.slice().reverse()" (click)="historyClick(history)">
+		<div class="album-art" [style.backgroundImage]="'url(' + (history.track.albumArtUrl ? history.track.albumArtUrl : 'assets/images/albumart-placeholder.jpg') + ')'">
+		</div>
+		<div class="description">
+			<div class="title">{{ history.track.title }}</div>
+			<div class="artist">{{ history.track.artist }}</div>
+		</div>
+	</div>
+</div>

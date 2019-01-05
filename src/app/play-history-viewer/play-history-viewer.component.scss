@@ -1,0 +1,109 @@
+:host {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: block;
+  color: white;
+}
+
+.tabs {
+	height: 3.75em;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 0 5px 0 rgba(0,0,0,.5);
+
+  .tab {
+  	flex: 1;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	height: 100%;
+
+  	&.active {
+  		i {
+  			text-shadow: 0px 0px 10px white;
+  		}
+  	}
+
+  	i {
+  		font-size: 28px;
+
+  		
+  	}
+  }
+}
+
+.tracks {
+  height: calc(100% - 3.75em);
+  overflow-y: auto;
+  overflow-y: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+  	width: 0 !important 
+ 	}
+}
+
+.track {
+	height: 120px;
+	position: relative;
+	overflow: hidden;
+	cursor: pointer;
+
+	&:hover {
+		.album-art {
+			transform: scale(1.1);
+		}
+	}
+
+	.buttons {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+}
+
+.description {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Kaushan Script';
+  font-size: 22px;
+  padding: 0 0.5em;
+
+  .title, .artist {
+  	overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+}
+
+.artist {
+	font-size: 0.8em;
+  margin-top: 2px;
+}
+
+.album-art {
+	position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+
+  transition: transform 0.2s linear;
+}

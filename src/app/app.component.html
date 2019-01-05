@@ -1,19 +1,31 @@
+<div class="history-viewer">
+  <app-play-history-viewer></app-play-history-viewer>
+</div>
 <div class="player">
   <div class="header">
     <div class="controls">
-      <div class="control history">
-        <i class="material-icons">history</i>
+      <div class="control history" (click)="historyView = true" [class.active]="historyView">
+        <i class="material-icons">queue_music</i>
       </div>
-      <div class="control volume" (click)="volumeSliderVisible = !volumeSliderVisible">
+     <!--  <div class="control volume" [class.active]="volumeSliderVisible" (click)="volumeSliderVisible = !volumeSliderVisible">
         <i class="material-icons">volume_up</i>
         <div class="volume-slider" [class.active]="volumeSliderVisible" (click)="$event.stopPropagation()">
           <app-vertical-slider (changed)="sliderChanged($event)"></app-vertical-slider>
           <i class="material-icons small-volume-icon" [class.active]="!muted" (click)="toggleMute()">volume_down</i>
           <i class="material-icons small-volume-icon mute" [class.active]="muted" (click)="toggleMute()">volume_mute</i>
         </div>
-      </div>
+      </div> -->
       <div class="control repeat" [class.active]="repeatOneTrack" (click)="toggleAudioLoop()">
         <i class="material-icons">repeat_one</i>
+      </div>
+      <div class="control favorit">
+        <i class="material-icons">favorite_border</i>
+      </div>
+      <div class="control skip">
+        <i class="material-icons" (click)="skipTrack()">skip_next</i>
+      </div>
+      <div class="control indicator" [class.loading]="trackLoading">
+        <i class="material-icons">hourglass_empty</i>
       </div>
     </div>
     <div class="expand"></div>
@@ -28,9 +40,10 @@
   <div class="album">
     <app-lp [albumCover]="currentTrack && currentTrack.albumArtUrl ? currentTrack.albumArtUrl : 'assets/images/albumart-placeholder.jpg'" (click)="lpClicked()"></app-lp>
     <div class="music-info">
-      <audio #audio autoplay="true" (ended)="audioEnded()" (play)="audioStarted()" (pause)="audioPaused()" src="{{currentTrack ? currentTrack.musicUrl : ''}}"></audio>
+      <audio #audio autoplay="true" src="{{currentTrack ? currentTrack.musicUrl : ''}}"></audio>
       <div class="title">{{ currentTrack ? currentTrack.title : '' }}</div>
-      <div class="artist">{{ currentTrack ? ('- ' + currentTrack.artist) : '' }}</div>
+      <div class="artist">{{ currentTrack ? ('by ' + currentTrack.artist) : '' }}</div>
     </div>
   </div>
+  <div class="player-overlay" (click)="historyView = false"></div>
 </div>

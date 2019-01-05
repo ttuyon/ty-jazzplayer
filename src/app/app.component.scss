@@ -1,3 +1,8 @@
+@keyframes spin {
+  20% {transform:rotate(0deg);}
+  100% {transform:rotate(180deg);}
+}
+
 :host {
   display: block;
 
@@ -6,6 +11,16 @@
   right: 0;
   bottom: 0;
   left: 0;
+
+  transition: transform 0.3s ease-in-out;
+
+  &.history-view {
+    transform: translate3d(300px, 0, 0);
+
+    .player-overlay {
+      display: block;
+    }
+  }
 }
 
 .player {
@@ -18,10 +33,30 @@
 
   background-image: radial-gradient(circle closest-side, rgba(255,255,255,0.05), transparent);
   background-color: #660011;
+  box-shadow: -3px 0 6px 0 rgba(0, 0, 0, 0.4);
 
   > * {
     width: 100%;
   }
+}
+
+.history-viewer {
+  width: 300px;
+  position: absolute;
+  left: -300px;
+  top: 0;
+  bottom: 0;
+  background-color: #660011;
+  z-index: -1;
+}
+
+.player-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100;
+
+  display: none;
 }
 
 .music-info {
@@ -46,7 +81,9 @@
   display: flex;
   align-items: center;
 
-  padding: 0 1em; 
+  padding: 0 1em;
+  // box-shadow: 2px 0 5px 0 rgba(0,0,0,.5);
+  // overflow: hidden;
 
   .expand {
     flex: 1;
@@ -97,8 +134,20 @@
       font-size: 28px;
     }
 
-    &.active {
+    &.active i:first-child{
       text-shadow: 0px 0px 10px white;
+    }
+
+    &.indicator {
+      visibility: hidden;
+
+      &.loading {
+        visibility: visible;
+
+        i {
+          animation: spin 1.5s linear infinite;
+        }
+      }
     }
 
     &.volume {

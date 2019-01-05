@@ -6,12 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LpComponent } from './lp/lp.component';
 import { VerticalSliderComponent } from './vertical-slider/vertical-slider.component';
+import { PlayHistoryViewerComponent } from './play-history-viewer/play-history-viewer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LpComponent,
-    VerticalSliderComponent
+    VerticalSliderComponent,
+    PlayHistoryViewerComponent
   ],
   imports: [
     BrowserModule,
