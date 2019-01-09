@@ -1,0 +1,20 @@
+<div class="tracks" [class.active]="mode === 'history'">
+	<div class="track" *ngFor="let history of histories.slice().reverse()" (click)="historyClick(history)">
+		<div class="album-art" [style.backgroundImage]="'url(' + (history.track.albumArtUrl ? history.track.albumArtUrl : 'assets/images/albumart-placeholder.jpg') + ')'">
+		</div>
+		<div class="description">
+			<div class="title">{{ history.track.title }}</div>
+			<div class="artist">{{ history.track.artist }}</div>
+		</div>
+	</div>
+</div>
+<div class="tracks" [class.active]="mode === 'playlist'">
+	<div class="track" *ngFor="let track of playlist" (click)="playlistItemClick(track)">
+		<div class="album-art" [style.backgroundImage]="'url(' + (track.albumArtUrl ? track.albumArtUrl : 'assets/images/albumart-placeholder.jpg') + ')'">
+		</div>
+		<div class="description">
+			<div class="title">{{ track.title }}</div>
+			<div class="artist">{{ track.artist }}</div>
+		</div>
+	</div>
+</div>

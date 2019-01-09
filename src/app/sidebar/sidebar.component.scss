@@ -29,20 +29,25 @@
   	i {
   		font-size: 28px;
 
-  		
+
   	}
   }
 }
 
 .tracks {
-  height: calc(100% - 3.75em);
+  height: 100%;
   overflow-y: auto;
   overflow-y: -moz-scrollbars-none;
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
-  	width: 0 !important 
- 	}
+  	width: 0 !important
+   }
+
+   display: none;
+   &.active {
+     display: block;
+   }
 }
 
 .track {

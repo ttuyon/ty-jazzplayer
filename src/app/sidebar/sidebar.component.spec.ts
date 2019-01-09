@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayHistoryViewerComponent } from './play-history-viewer.component';
+import { SidebarComponent } from './sidebar.component';
 
 describe('PlayHistoryViewerComponent', () => {
   let component: PlayHistoryViewerComponent;
@@ -8,13 +8,13 @@ describe('PlayHistoryViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayHistoryViewerComponent ]
+      declarations: [ SidebarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayHistoryViewerComponent);
+    fixture = TestBed.createComponent(SidebarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

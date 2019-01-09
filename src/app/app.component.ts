@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit, HostBinding } from '@angular/core';
 import { fromEvent as ObservableFromEvent, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
-import { ChannelService, Track, Channel } from './channel.service';
+import { ChannelService } from './channel.service';
 import { AudioControlService } from './audio-control.service';
+import { PlaylistService } from './playlist.service';
+import { Track } from './track.model';
+import { Channel } from './channel.model';
 
 import { LpComponent } from './lp/lp.component';
 import { VerticalSliderComponent } from './vertical-slider/vertical-slider.component';
@@ -14,11 +17,13 @@ import { VerticalSliderComponent } from './vertical-slider/vertical-slider.compo
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('audio') audioElement: ElementRef;
+  @ViewChild('audio') audioElement: ElementRef<HTMLAudioElement>;
+  @ViewChild('channelSelect') channelSelectElement: ElementRef<HTMLSelectElement>;
+
   @ViewChild(LpComponent) lpElement: LpComponent;
   @ViewChild(VerticalSliderComponent) verticalSliderComponent: VerticalSliderComponent;
 
-  @HostBinding('class.history-view') historyView: boolean;
+  @HostBinding('class.history-view') sidebarOpened: boolean;
 
   private unsubscribe: Subject<void> = new Subject<void>();
 
@@ -26,16 +31,18 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   public currentTrack: Track;
 
   public repeatOneTrack: boolean = false;
-  public volumeSliderVisible: boolean = false;
-  public muted: boolean = false;
-  public volumeBeforeMute: number;
 
   private _trackLoading: boolean = false;
   public trackLoading: boolean = false;
 
+  public isPlaylist: boolean = false;
+
+  public sidebarMode = 'history';
+
   constructor(
     private channelService: ChannelService,
-    private audioControlService: AudioControlService
+    private audioControlService: AudioControlService,
+    private palylistService: PlaylistService
   ) { }
 
   ngOnInit() {
@@ -45,14 +52,31 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         this.channelList = result;
       });
 
+    this.channelService.currentChannel$
+      .pipe(
+        takeUntil(this.unsubscribe),
+        filter((channel) => {
+          return channel &&
+            this.channelSelectElement &&
+            channel.id !== parseInt(this.channelSelectElement.nativeElement.value)
+        })
+      )
+      .subscribe((channel) => {
+        this.channelSelectElement.nativeElement.value = channel.id.toString();
+      });
+
     this.channelService.currentTrack$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((track: Track) => {
         this._trackLoading = false;
         this.trackLoading = false;
         this.currentTrack = track;
+
         if (track) {
           document.title = `${track.title} by ${track.artist}`;
+          this.isPlaylist = this.palylistService.hasTrack(track.id);
+        } else {
+          this.isPlaylist = false;
         }
       });
 
@@ -113,22 +137,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  sliderChanged(value) {
-    this.changeVolume(value);
-  }
-
-  toggleMute() {
-    if (!this.muted) {
-      this.volumeBeforeMute = this.audioElement.nativeElement.volume;
-    }
-    this.verticalSliderComponent.setSliderValue(this.muted ? this.volumeBeforeMute : 0);
-  }
-
-  changeVolume(volume) {
-    this.audioElement.nativeElement.volume = volume;
-    this.muted = volume === 0;
-  }
-
   toggleAudioLoop() {
     this.repeatOneTrack = !this.repeatOneTrack;
 
@@ -152,9 +160,26 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   skipTrack() {
-    if (!this.currentTrack) return;
+    if (!this.currentTrack || this._trackLoading) return;
 
     this.requestNextTrack();
+  }
+
+  openSidebar(mode: string) {
+    this.sidebarMode = mode;
+    this.sidebarOpened = true;
+  }
+
+  togglePlaylist() {
+    if (!this.currentTrack) return;
+
+    if (this.isPlaylist) {
+      this.palylistService.removeTrack(this.currentTrack.id);
+    } else {
+      this.palylistService.addTrack(this.currentTrack);
+    }
+
+    this.isPlaylist = !this.isPlaylist;
   }
 
 }
