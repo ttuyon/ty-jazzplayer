@@ -119,15 +119,12 @@ export class ChannelService {
       } else {
         newTrackIndex = currentTrackIndex + 1;
       }
+
       nextTrackRequest = this.getChannel(this.getCurrentChannelId())
         .pipe(map(() => {
           return this._channelTracks[newTrackIndex];
         }));
     } else {
-      // if (currentTrackIndex == this.channelTracks.length - 2) {
-     //    this.getChannel(this.currentChannelId).subscribe();
-     //  }
-
       nextTrackRequest = ObservableOf(this._channelTracks[++currentTrackIndex]);
     }
 
@@ -167,7 +164,7 @@ export class ChannelService {
     if (!this.getCurrentChannel() ||
         this.getCurrentChannel().id !== PlaylistChannelId) {
       this.changeChannel(PlaylistChannelId);
-      this.getChannel(this.getCurrentChannelId());
+      this.getChannel(this.getCurrentChannelId()).subscribe();
     }
 
     this._currentTrack$.next(track);
@@ -185,7 +182,6 @@ export class ChannelService {
     }
 
     return -1;
-    // return this._channelTracks.lastIndexOf(this._currentTrack$.getValue());
   }
 
 }

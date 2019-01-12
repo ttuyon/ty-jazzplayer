@@ -4,6 +4,10 @@
 }
 
 :host {
+  @media (max-width: 414px) {
+    font-size: 14px;
+  }
+
   display: block;
 
   position: absolute;
@@ -70,10 +74,18 @@
   .title {
     font-size: 1.15em;
   }
-}
 
-.artist {
-  margin-top: 0.2em;
+  .artist {
+    margin-top: 0.2em;
+  }
+
+  @media (max-width: 414px) {
+    .title, .artist {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 }
 
 .header, .footer {
@@ -88,6 +100,35 @@
 
   .expand {
     flex: 1;
+  }
+}
+
+.header {
+  @media (max-width: 414px) {
+    flex-direction: column-reverse;
+    height: auto;
+
+    .expand {
+      display: none;
+    }
+
+    > * {
+      margin-top: 1em;
+    }
+
+    .controls {
+      position: relative;
+
+      .control.indicator {
+        display: block;
+        text-align: center;
+        margin-left: 0;
+        margin-top: 0.8em;
+        position: absolute;
+        left: 0;
+        right: 0;
+      }
+    }
   }
 }
 
@@ -110,6 +151,10 @@
 
     font-family: 'Quicksand', sans-serif;
     // letter-spacing: 1px;
+
+    @media (max-width: 414px) {
+      text-align-last: center;
+    }
   }
 }
 
