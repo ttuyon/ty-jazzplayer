@@ -45,6 +45,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
         if (existingItemIndex !== -1) {
           this.histories.splice(existingItemIndex, 1);
+        } else if (this.histories.length >= 10) {
+          this.histories.shift();
         }
 
         this.histories.push({
